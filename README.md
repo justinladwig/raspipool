@@ -1,6 +1,8 @@
 # raspipool
 **Swimming-Pool Automation Systen with Raspberry Pi + Home Assistant**
 
+This branch is suppose to maintain a working RaspiPool with pH and chlorine
+
 <img src="/help/media/raspipool_main2.png" height="256">
 
 ## Overview:
