@@ -1,59 +1,61 @@
 sensor:
   - platform: template
     sensors:
-      pool_temp:
+      water_temp:
         friendly_name: "Water Temperature"
-#        entity_id: sensor.pool_temp_fahrenheit
-        value_template: "{{ ((states('sensor.pool_temp_fahrenheit')|float - 32)*5/9)|round(1) }}"
+#        entity_id: sensor.water_temp_fahrenheit
+        value_template: "{{ states('sensor.water_temp_stats')|float|round(1) }}"
         icon_template: mdi:coolant-temperature
         unit_of_measurement: 'C'
 
-  - platform: template
+#  - platform: template
   # workaround for homekit. If the unit is 'C', homekit is confused
   # if the unit is '°C' above, homeassistant is confused.
   # however, if the temperature is set in Celsius, homeassistant somehow
   # figures out automagically that it should be F
   # F*ED UP!
-    sensors:
-      pool_temp_homekit:
-        friendly_name: "Water Temperature"
+#    sensors:
+#      water_temp_homekit:
+#        friendly_name: "Water Temperature"
  #       entity_id:
- #         - sensor.pool_temp
- #         - sensor.pool_temp_fahrenheit
-        value_template: >-
-          {% if is_state("input_boolean.imperial", "on") %}
-            {{states('sensor.pool_temp')}}
-          {% else %}
-            {{states('sensor.pool_temp_fahrenheit')}}
-          {% endif %}
-        icon_template: mdi:coolant-temperature
-        unit_of_measurement: '°C'
+ #         - sensor.water_temp
+ #         - sensor.water_temp_fahrenheit
+#        value_template: >-
+#          {% if is_state("input_boolean.imperial", "on") %}
+#            {{states('sensor.water_temp')}}
+#          {% else %}
+#            {{states('sensor.water_temp_fahrenheit')}}
+#          {% endif %}
+#        icon_template: mdi:coolant-temperature
+#        unit_of_measurement: '°C'
 
   - platform: template
     sensors:
-      pool_temp_fahrenheit:
+      water_temp_fahrenheit:
         friendly_name: "Water Temperature"
 #        entity_id: sensor.pool_water_temperature
-        value_template: "{{ states('sensor.pool_water_temperature')|float|round(1) }}"
+        value_template: "{{ ((states('sensor.water_temp')|float * 9/5) + 32)|round(1) }}"
         icon_template: mdi:coolant-temperature
         unit_of_measurement: 'F'
+
+  # Loading 1-Wire via platform setup is deprecated.
 #  - platform: onewire
 #    names:
-#      28-0319a2792bc3: Pool Water
-#    scan_interval: 10
+#      28-0119213a984b: Pool Water Temperature
+#    scan_interval: 120
 
 # Atlas Resistance Temperature Detector (RTD)
-  - platform: atlas_scientific
+#  - platform: atlas_scientific
 # For serial ports use:
 #   port: /dev/ttyUSB0
 # For I2C enter the hex device id
-    port: 0x66
-    scan_interval: 120
-    scale: 'F'
+#    port: 0x66
+#    scan_interval: 120
+#    scale: 'F'
 
   - platform: statistics
-    name: pool_water_temperature
-    entity_id: sensor.ezo_temperature
+    name: water_temp_stats
+    entity_id: sensor.water_temp_raw
     max_age:
       hours: 24
     precision: 1
@@ -73,7 +75,7 @@ automation:
   - alias: temp_low
     trigger:
     - platform: numeric_state
-      entity_id: sensor.pool_temp
+      entity_id: sensor.water_temp
       below: 7
       for:
         hours: 24
@@ -93,7 +95,7 @@ automation:
   - alias: temp_low_imperial
     trigger:
     - platform: numeric_state
-      entity_id: sensor.pool_temp_fahrenheit
+      entity_id: sensor.water_temp_fahrenheit
       below: 44
       for:
         hours: 24
@@ -111,7 +113,7 @@ automation:
   - alias: temp_high
     trigger:
     - platform: numeric_state
-      entity_id: sensor.pool_temp
+      entity_id: sensor.water_temp
       above: 29
       for:
         hours: 24
@@ -131,7 +133,7 @@ automation:
   - alias: temp_high
     trigger:
     - platform: numeric_state
-      entity_id: sensor.pool_temp_fahrenheit
+      entity_id: sensor.water_temp_fahrenheit
       above: 84
       for:
         hours: 24

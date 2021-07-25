@@ -5,7 +5,7 @@ sensor:
         # at what time is the pump going to run next?
         friendly_name: "Next Cycle pump"
         value_template: >-
-          {% set temp = states('sensor.pool_temp')|float %}
+          {% set temp = states('sensor.water_temp')|float %}
           {{ ( state_attr('input_datetime.recirculation','timestamp')|float *
             ( 1 - is_state('input_boolean.turbo','on')|int * states('input_number.turbo')|float * 2 / 300 ) *
             ( temp / [1, ( 9 - temp / 2)]|max ) /
@@ -28,9 +28,9 @@ sensor:
         unit_of_measurement: 'h'
         friendly_name: "Pump Run Time"
  #      value_template: >-
- #        {{[0.0, (states('sensor.pool_temp_fahrenheit')|float/5 + states.input_datetime.recirculation.attributes.timestamp | timestamp_custom('%H', False)|int - 14)|round(2)] | max}}
+ #        {{[0.0, (states('sensor.water_temp_fahrenheit')|float/5 + states.input_datetime.recirculation.attributes.timestamp | timestamp_custom('%H', False)|int - 14)|round(2)] | max}}
         value_template: >-
-          {{[0.0, (states('sensor.pool_temp_fahrenheit')|float/10 + states.input_datetime.recirculation.attributes.timestamp | timestamp_custom('%H', False)|int - 7)|round(2)] | max}}
+          {{[0.0, (states('sensor.water_temp_fahrenheit')|float/10 + states.input_datetime.recirculation.attributes.timestamp | timestamp_custom('%H', False)|int - 7)|round(2)] | max}}
 
       ttr_low_speed:
 # how long to run in either single speed or low speed
@@ -240,7 +240,7 @@ automation:
     - service: homeassistant.update_entity
       entity_id: sensor.ezo_ph
     - service: homeassistant.update_entity
-      entity_id: sensor.ezo_temperature
+      entity_id: sensor.water_temp_raw
     - service: homeassistant.update_entity
       entity_id: sensor.ezo_orp
 

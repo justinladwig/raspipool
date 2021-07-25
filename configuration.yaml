@@ -1,13 +1,16 @@
 homeassistant:
-  name: RaspiPool
-  # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
-  unit_system: imperial
   # customize: !include customize.yaml
   packages: !include_dir_named packages
-  external_url: "http://ivmcontrol.dscloud.me:8123"
-  internal_url: "http://homeassistant.local:8123"
+
+http:
+#  ssl_certificate: !secret ssl_certificate
+#  ssl_key: !secret ssl_key
+
+lovelace:
+  mode: yaml
+  resources:
+    - url: /hacsfiles/scheduler-card/scheduler-card.js
+      type: module
 
 # Disable default config, selectively enable services needed.
 # default_config:
@@ -38,41 +41,39 @@ system_health:
 
 tts:
   - platform: google_translate
+
 logger:
   default: info
   logs:
     custom_components.atlas_scientific.sensor: debug
     custom_components.scheduler: debug
     homeassistant.components.switch.command_line: debug
-    homeassistant.components.homekit: debug
     zeroconf: error
     homeassistant.components.websocket_api.http.connection: error
 
 group: !include groups.yaml
-homekit: !include homekit.yaml
-emulated_hue:
-  listen_port: 80
-  expose_by_default: false
-  entities:
-    switch.pump:
-      name: Pump
-      hidden: false
-    switch.ph:
-      name: Acid Pump
-      hidden: false
-    switch.orp:
-      name: Chlorine Pump
-      hidden: false
-    switch.turbo:
-      name: Turbo
-      hidden: false
+
+# emulated_hue:
+# listen_port: 80
+#  expose_by_default: false
+#  entities:
+#    switch.pump:
+#      name: Pump
+#      hidden: false
+#    switch.ph:
+#      name: Acid Pump
+#      hidden: false
+#    switch.orp:
+#      name: Chlorine Pump
+#      hidden: false
+#    switch.turbo:
+#      name: Turbo
+#      hidden: false
+
 script: !include scripts.yaml
-lovelace:
-  mode: yaml
-  resources:
-    - url: /local/scheduler-card/scheduler-card.js?v=0
-      type: module
+
 shell_command:
   calibrate: 'python calibrate.py "{{ device }}" "{{ target }}"'
+
 system_log:
    max_entries: 500

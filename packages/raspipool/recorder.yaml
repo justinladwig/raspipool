@@ -4,11 +4,11 @@ recorder:
   include:
     entities:
       - sensor.pump_state
-      - sensor.pool_temp
-      - sensor.pool_temp_fahrenheit
+      - sensor.water_temp
+      - sensor.water_temp_fahrenheit
       - sensor.orp
       - sensor.ph
-      - sensor.pool_water_temperature
+      - sensor.water_temp_raw
       - sensor.ezo_ph
       - sensor.ezo_orp
       - sensor.remain_cycles

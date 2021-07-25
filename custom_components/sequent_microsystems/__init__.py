@@ -1,2 +1,0 @@
-"""Sequent Microsystems"""
-

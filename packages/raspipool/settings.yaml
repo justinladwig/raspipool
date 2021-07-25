@@ -54,7 +54,7 @@ input_boolean:
   imperial:
     name: Imperial Units
     icon: mdi:tape-measure
-    initial: true
+    initial: false
 
   salt_system:
     name: Salt System
@@ -70,16 +70,16 @@ sensor:
     sensors:
       simple_date:
         friendly_name: "Date"
-        entity_id: sensor.time
+        unique_id: sensordatetemplate
         value_template: >-
           {% if is_state("input_boolean.imperial", "on") %}
             {{as_timestamp(now()) | timestamp_custom('%m/%d')}}
           {% else %}
-            {{as_timestamp(now()) | timestamp_custom('%d/%m')}}
+            {{as_timestamp(now()) | timestamp_custom('%d.%m.')}}
           {% endif %}
       simple_time:
         friendly_name: "Time"
-        entity_id: sensor.time
+        unique_id: sensortimetemplate
         value_template: "{{as_timestamp(now()) | timestamp_custom('%H:%M')}}"
 
 automation:

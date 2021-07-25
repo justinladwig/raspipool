@@ -22,7 +22,7 @@ views:
                   min: 32
                   max: 90
                   theme: Backend-selected
-                  entity: sensor.pool_temp_fahrenheit
+                  entity: sensor.water_temp_fahrenheit
                   severity:
                     green: 75
                     red: 84
@@ -37,7 +37,7 @@ views:
                   min: 0
                   max: 34
                   theme: Backend-selected
-                  entity: sensor.pool_temp
+                  entity: sensor.water_temp
                   severity:
                     green: 24
                     yellow: 26
@@ -66,13 +66,13 @@ views:
                 type: gauge
           - show_name: false
             entities:
-              - entity: sensor.ezo_temperature
+              - entity: sensor.water_temp_raw
                 show_last_changed: true
                 tap_action:
                   action: call-service
                   service: homeassistant.update_entity
                   service_data:
-                    entity_id: sensor.ezo_temperature
+                    entity_id: sensor.water_temp_raw
               - entity: sensor.ezo_ph
                 show_last_changed: true
                 tap_action:
@@ -248,7 +248,7 @@ views:
                 name: pH
               - entity: sensor.orp
                 name: ORP
-              - entity: sensor.pool_temp_fahrenheit
+              - entity: sensor.water_temp
                 name: Water Temp.
             type: history-graph
             hours_to_show: 3
@@ -263,7 +263,7 @@ views:
                 name: pH
               - entity: sensor.orp
                 name: ORP
-              - entity: sensor.pool_temp_fahrenheit
+              - entity: sensor.water_temp
                 name: Water Temp.
             type: history-graph
             hours_to_show: 72

@@ -2,3 +2,14 @@
 __pycache__
 custom_components/atlas_scientific/__pycache__
 custom_components/sequent_microsystems/__pycache__
+.HA_VERSION
+.storage/
+custom_components/hacs/
+core
+HCFHNP~2
+home-assistant_v2.db
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
+home-assistant.log
+secrets.yaml
+workspace.code-workspace

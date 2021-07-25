@@ -1,4 +1,4 @@
-notify:
-  - platform: pushbullet
-    api_key: !secret pushbullet_api_key
-    name: pushbullet
+#notify:
+#  - platform: pushbullet
+#    api_key: !secret pushbullet_api_key
+#    name: pushbullet
