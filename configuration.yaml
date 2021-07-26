@@ -3,8 +3,8 @@ homeassistant:
   packages: !include_dir_named packages
 
 http:
-#  ssl_certificate: !secret ssl_certificate
-#  ssl_key: !secret ssl_key
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
 
 lovelace:
   mode: yaml
